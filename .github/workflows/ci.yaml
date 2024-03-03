@@ -4,16 +4,14 @@ on:
   push:
     branches: [ "develop" ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "master" , "develop"]
 
 permissions:
   contents: read
 
 jobs:
-  test:
-
+  unit_test:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python 3.10
@@ -24,3 +22,6 @@ jobs:
       run: pip install -r requirements.txt
     - name: Unit tests
       run: python -m unittest tests/test_visit_sensor.py
+    - name: Check format
+      run: |
+        black --check --verbose .
